@@ -2,7 +2,7 @@
 import commands
 import threading
 
-from zUtils.util_log import log
+from common_utils.util_log import log
 
 
 class ServerThread(threading.Thread):
@@ -11,28 +11,49 @@ class ServerThread(threading.Thread):
         self.id = thread_id
         self.socket = client_socket
         self.address = client_address
-        log.info('***---client connected, id:{0}, address: {1}:{2}'.format(self.id, self.address[0], self.address[1]))
+        log.info('***---_client connected, id:{0}, address: {1}:{2}'.format(self.id, self.address[0], self.address[1]))
 
     def run(self):
         try:
             while True:
                 # 获取把接收的数据
-                in_cmd = self.socket.recv(1024)
-                if len(in_cmd) == 0:
+                print('make file')
+                # self.socket.connect()
+                socket_file = self.socket.makefile()
+                print socket_file
+                in_msg = socket_file.readlines()
+                print in_msg
+                # in_msg = self.socket.recv(1024)
+                if len(in_msg) == 0:
                     # 忽略空信息
                     continue
-                if in_cmd.lower() == 'exit':
+                if in_msg.lower() == 'exit':
                     # 客户端主动退出处理
-                    log.info('*----* client{0} disconnected self.'.format(self.id))
+                    log.info('*----* _client{0} disconnected self.'.format(self.id))
                     self.socket.close()
                     break
+
                 # 客户端消息处理
-                self.cmd_handler(in_cmd)
+                # self.cmd_handler(in_cmd)
+                self.msg_handler(in_msg)
+
         except Exception, e:
-            log.error('*----* client{0} disconnected. Exception Args: {1}'.format(self.id, e))
+            log.error('*----* _client{0} disconnected. Exception Args: {1}'.format(self.id, e))
         finally:
             if self.socket is not None:
                 self.socket.close()
+
+    def msg_handler(self, msg):
+
+        log.info('client_id: {0},msg: \n{1}'.format(self.id, msg))
+        if msg == 'test':
+            self.socket.sendall('test back.')
+            log.info('[test]')
+        elif msg == '<end>':
+            self.socket.sendall('Done.')
+            log.info('<transmit end>')
+        else:
+            pass
 
     def cmd_handler(self, in_cmd):
         # commands.getstatusoutput 执行系统命令（即shell命令）
