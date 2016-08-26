@@ -1,8 +1,10 @@
 ﻿# coding=utf-8
 import socket
+
 from server_socket import HOST, PORT
+
+from _server.server_thread import ServerThread
 from common_utils.util_log import log
-from server_socket._server.server_thread import ServerThread
 
 id_client = 0
 socket_server = None
