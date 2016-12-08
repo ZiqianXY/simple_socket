@@ -1,5 +1,6 @@
 ﻿# coding=utf-8
 import socket
+
 from common_utils.util_log import log
 
 HOST_VM = '10.0.2.15'
@@ -8,7 +9,7 @@ LOCALHOST = 'localhost'
 HOST_1001 = '125.217.226.161'
 HOST_SCUT = '202.38.213.72'
 
-HOST = HOST_VM
+HOST = HOST_GOD
 PORT = 5555
 
 s = None

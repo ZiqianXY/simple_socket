@@ -1,7 +1,7 @@
 # coding:utf-8
 import MySQLdb  # creator
 # 返回dict类型数据,tuple类型数据,基本数据类型
-from MySQLdb.cursors import DictCursor, Cursor
+from MySQLdb.cursors import DictCursor
 
 DB_HOST = "localhost"   #
 DB_PORT = 3306          #

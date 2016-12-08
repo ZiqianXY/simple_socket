@@ -1,6 +1,6 @@
 # coding:utf-8
-from db_util.connector import MySQL
 from db_util import config
+from db_util.connector import MySQL
 from db_vehicle.vehicle import VehicleStatus
 
 """测试之前使用如下命令进行数据库建立.
